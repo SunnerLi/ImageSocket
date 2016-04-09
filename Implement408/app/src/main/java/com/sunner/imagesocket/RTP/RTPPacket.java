@@ -19,6 +19,7 @@ public class RTPPacket {
      *                                      Header Variable
      *----------------------------------------------------------------------------------------------*/
     //  version 為版號，目前RTP版號為2
+    //  1011 0011 = 1 + 2 + 16 + 32 + 128 = 179
     public static int version = 2;
 
     //  padding 為加密演算法，目前不使用
@@ -168,7 +169,7 @@ public class RTPPacket {
 
 
         int[] header = byteArr2IntArr(Base64.decode(headerString.getBytes(), Base64.DEFAULT));
-        //Log.v(TAG, "Decode header int長度：" + header.length);
+        Log.v(TAG, "Decode header string長度：" + Base64.decode(headerString.getBytes(), Base64.DEFAULT).length);
         return header;
     }
 
