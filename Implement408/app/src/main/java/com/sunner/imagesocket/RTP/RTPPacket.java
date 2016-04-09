@@ -1,7 +1,8 @@
 package com.sunner.imagesocket.RTP;
 
 import android.util.Base64;
-import android.util.Log;
+
+import com.sunner.imagesocket.Log.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -22,14 +23,14 @@ public class RTPPacket {
 
     //  padding 為加密演算法，目前不使用
     //  1為使用，0為不使用
-    public static int padding = 0;
+    public static int padding = 1;
 
     // extension 為頭部延長(預設不延長)
     // 1為延長，0為不延長
-    public static int extension = 0;
+    public static int extension = 1;
 
     //  cc 為csrc個數，這裡只有手機(1)
-    public static int cc = 1;
+    public static int cc = 3;
 
     //  pt 為type，jpeg設定為1(?)
     public static int pt = 1;
@@ -65,12 +66,10 @@ public class RTPPacket {
     }
 
     // 編碼實作
-    // 0000 0010
-    // 1000 0000 000
     public byte[] encode(String payload, int imageIndex, int marker) {
         int[] header = new int[12];
 
-        header[0] = (header[0] | version << 6) & 0x40;
+        header[0] = (header[0] | version << 6);
         header[0] = (header[0] | padding << 5);
         header[0] = (header[0] | extension << 4);                                                   // 是否頭部延長
         header[0] = (header[0] | (cc & 0x0F));                                                      // cc用4個bit
@@ -88,14 +87,40 @@ public class RTPPacket {
         return Base64Encode(header, payload);
     }
 
-    public byte[] Base64Encode(int[] header, String payload) {
-        byte[] headerBytes = intArr2ByteArr(header);
-        Log.v(TAG, "header長度：" + header.length);
+    // 解碼實作
+    public void decode(byte[] packet) {
+        int header[] = Base64Decode(packet);
 
-        return (new String(Base64.encode(headerBytes, Base64.DEFAULT))
-                + payload.getBytes()).getBytes();
+        int _version = (header[0] >> 6);
+        int _padding = (header[0] & 0x20) >> 5;
+        int _extension = (header[0] & 0x10) >> 4;
+        int _cc = (header[0] & 0x0F);
+        int _marker = (header[1] >> 7);
+        int _pt = (header[1] | (pt & 0x7F));
+        int _imageIndex = (header[2] << 8) + header[3];
+        int _minute = header[4];
+        int _second = header[5];
+        int _millisecond = (header[6] << 3) + ((header[7] & 0xE0) >> 5);
+        int _ssrc = header[7] & 0x0F;
+
+        /*
+        Log.v(TAG, "版本號:" + _version);
+        Log.v(TAG, "padding:" + _padding);
+        Log.v(TAG, "頭部延長:" + _extension);
+        Log.v(TAG, "cc個數:" + _cc);
+        Log.v(TAG, "是否為結尾:" + _marker);
+        Log.v(TAG, "影像類型:" + _pt);
+        Log.v(TAG, "第幾楨:" + _imageIndex);
+        Log.v(TAG, "分:" + _minute);
+        Log.v(TAG, "秒:" + _second);
+        Log.v(TAG, "毫秒:" + _millisecond);
+        Log.v(TAG, "ssrc:" + _ssrc);
+        */
     }
 
+    /*----------------------------------------------------------------------------------------------
+     *                                    Array Transform
+     *----------------------------------------------------------------------------------------------*/
     public byte[] intArr2ByteArr(int[] ints) {
         ByteBuffer byteBuffer = ByteBuffer.allocate(ints.length * 4);
         IntBuffer intBuffer = byteBuffer.asIntBuffer();
@@ -103,7 +128,7 @@ public class RTPPacket {
         return byteBuffer.array();
     }
 
-    public int[] intArr2ByteArr(byte[] bytes) {
+    public int[] byteArr2IntArr(byte[] bytes) {
         IntBuffer intBuf = ByteBuffer.wrap(bytes)
                 .order(ByteOrder.BIG_ENDIAN)
                 .asIntBuffer();
@@ -112,12 +137,32 @@ public class RTPPacket {
         return array;
     }
 
-    public void decode(byte[] packet) {
+    /*----------------------------------------------------------------------------------------------
+     *                                    Base64 En/Decode
+     *----------------------------------------------------------------------------------------------*/
+
+    public byte[] Base64Encode(int[] header, String payload) {
+        byte[] headerBytes = intArr2ByteArr(header);
+        String headerString = new String(Base64.encode(headerBytes, Base64.DEFAULT));
+        /*
+        Log.v(TAG, "Encode header int長度：" + header.length);
+        Log.v(TAG, "Encode header string長度：" + headerString.length());
+        Log.v(TAG, "Encode payload string長度：" + payload.length());
+        */
+
+        return (headerString + payload).getBytes();
+    }
+
+    public int[] Base64Decode(byte[] packet) {
         String wholeString = new String(packet);
         String headerString = wholeString.substring(0, 65);
         String payload = wholeString.substring(65);
-        int[] header = intArr2ByteArr(headerString.getBytes());
-        Log.v(TAG, "header長度：" + header.length);
 
+
+        int[] header = byteArr2IntArr(Base64.decode(headerString.getBytes(), Base64.DEFAULT));
+        //Log.v(TAG, "Decode header int長度：" + header.length);
+        return header;
     }
+
+
 }

@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.sunner.imagesocket.RTP.RTPPacket;
+import com.sunner.imagesocket.Socket.ImageSocket_UDP;
+
+import java.io.IOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = "資訊";
@@ -16,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RTPPacket rtpPacket = new RTPPacket();
-        Log.v(TAG, "長度："+rtpPacket.encode("Adsfdfs", 255).length);
-        rtpPacket.decode(rtpPacket.encode("Adsfdfs", 2));
+        Log.v(TAG, "長度：" + rtpPacket.encode("Adsfdfs", 255).length);
+        rtpPacket.decode(rtpPacket.encode("Adsfdfs", 124));
 
     }
 }
