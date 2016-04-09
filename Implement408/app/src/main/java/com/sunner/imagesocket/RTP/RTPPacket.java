@@ -42,6 +42,7 @@ public class RTPPacket {
      *                                      Rest Variable
      *----------------------------------------------------------------------------------------------*/
     int minute = -1, second = -1, millisecond = -1;
+    int payloadMaxLength = 60000;
 
 
     // 建構式
@@ -58,11 +59,17 @@ public class RTPPacket {
         millisecond = calendar.get(Calendar.MILLISECOND);
     }
 
+    // Set the max length of payload
+    public RTPPacket setMaxLengthPayload(int length){
+        payloadMaxLength = length;
+        return this;
+    }
+
     // 編碼(default)
     public byte[] encode(String payload, int imageIndex) {
         // 第 1 個參數為image之index
         // 第 3 個參數表示是否為結尾   ( 0 為結尾 )
-        return encode(payload, imageIndex, (payload.length() > 60000 ? 1 : 0));
+        return encode(payload, imageIndex, (payload.length() > payloadMaxLength ? 1 : 0));
     }
 
     // 編碼實作
@@ -116,6 +123,7 @@ public class RTPPacket {
         Log.v(TAG, "毫秒:" + _millisecond);
         Log.v(TAG, "ssrc:" + _ssrc);
         */
+
     }
 
     /*----------------------------------------------------------------------------------------------

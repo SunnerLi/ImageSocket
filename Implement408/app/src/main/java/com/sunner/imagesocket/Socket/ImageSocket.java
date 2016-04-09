@@ -1,6 +1,7 @@
 package com.sunner.imagesocket.Socket;
 
 import android.graphics.Bitmap;
+
 import com.sunner.imagesocket.Log.Log;
 
 import java.io.IOException;
@@ -48,13 +49,7 @@ public class ImageSocket {
                     }
                     return this;
                 case UDP:
-                    try {
-                        socket_udp = new ImageSocket_UDP(host, port);
-                    } catch (UnknownHostException e) {
-                        e.printStackTrace();
-                    } catch (SocketException e) {
-                        e.printStackTrace();
-                    }
+                    socket_udp = new ImageSocket_UDP(host, port);
                     return this;
                 default:
                     Log.e(TAG, "Wrong Mode Number");

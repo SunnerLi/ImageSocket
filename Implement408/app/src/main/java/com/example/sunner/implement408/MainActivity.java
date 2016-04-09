@@ -1,11 +1,13 @@
 package com.example.sunner.implement408;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.sunner.imagesocket.RTP.RTPPacket;
+import com.sunner.imagesocket.Socket.ImageSocket;
 import com.sunner.imagesocket.Socket.ImageSocket_UDP;
 
 import java.io.IOException;
@@ -20,9 +22,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RTPPacket rtpPacket = new RTPPacket();
-        Log.v(TAG, "長度：" + rtpPacket.encode("Adsfdfs", 255).length);
-        rtpPacket.decode(rtpPacket.encode("Adsfdfs", 124));
+        try {
+            new ImageSocket_UDP("", 12345)
+                    .getSocketWithCheck()
+                    .setOppoPort(12345)
+                    .send(getImage());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public Bitmap getImage() {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inScaled = false;
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.screen1, opts);
+        return null;
     }
 }
