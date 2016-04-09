@@ -20,7 +20,7 @@ import java.net.UnknownHostException;
  * Created by sunner on 2016/4/8.
  */
 class ImageSocket_UDP extends ImgSocket {
-    DatagramSocket datagramSocket[];
+    DatagramSocket datagramSocket[] = new DatagramSocket[5];
     private InetAddress inetAddress;
 
 

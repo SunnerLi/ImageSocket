@@ -9,6 +9,13 @@ import com.sunner.imagesocket.Socket.ImageSocket;
 
 import java.io.IOException;
 
+/*
+imageSocket.setProtocol(ImageSocket.TCP)
+                    .getSocket(10)
+                    .connect()
+                    .getInputStream()
+                    .send(getImage());
+ */
 public class MainActivity extends AppCompatActivity {
     String TAG = "資訊";
 
@@ -17,34 +24,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageSocket imageSocket = new ImageSocket("", 12345);
-        try {
-            imageSocket.setProtocol(ImageSocket.TCP)
-                    .getSocket(10)
-                    .connect()
-                    .getInputStream()
-                    .send(getImage());
-            imageSocket.setProtocol(ImageSocket.UDP)
-                    .getSocket(true)
-                    .setOppoPort(12345)
-                    .send(getImage());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
 
+                ImageSocket imageSocket = new ImageSocket("192.168.0.100", 12345);
+                try {
+                    imageSocket.setProtocol(ImageSocket.UDP)
+                            .getSocket(true)
+                            .setOppoPort(12345)
+                            .send(getImage());
+                    imageSocket.close();
 
-        try {
-            imageSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
 
     }
 
     public Bitmap getImage() {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inScaled = false;
-        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.screen1, opts);
-        return null;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.yellow1, opts);
+        return bitmap;
     }
 }

@@ -152,11 +152,11 @@ public class RTPPacket {
     public byte[] Base64Encode(int[] header, String payload) {
         byte[] headerBytes = intArr2ByteArr(header);
         String headerString = new String(Base64.encode(headerBytes, Base64.DEFAULT));
-        /*
+
         Log.v(TAG, "Encode header int長度：" + header.length);
         Log.v(TAG, "Encode header string長度：" + headerString.length());
         Log.v(TAG, "Encode payload string長度：" + payload.length());
-        */
+
 
         return (headerString + payload).getBytes();
     }
