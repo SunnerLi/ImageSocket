@@ -4,15 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.sunner.imagesocket.RTP.RTPPacket;
 import com.sunner.imagesocket.Socket.ImageSocket;
-import com.sunner.imagesocket.Socket.ImageSocket_UDP;
 
 import java.io.IOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
     String TAG = "資訊";
@@ -22,18 +17,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageSocket imageSocket = new ImageSocket("", 12345);
         try {
-            new ImageSocket_UDP("", 12345)
-                    .getSocketWithCheck()
+            imageSocket.setProtocol(ImageSocket.TCP)
+                    .getSocket(10)
+                    .connect()
+                    .getInputStream()
+                    .send(getImage());
+            imageSocket.setProtocol(ImageSocket.UDP)
+                    .getSocket(true)
                     .setOppoPort(12345)
                     .send(getImage());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (SocketException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        try {
+            imageSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public Bitmap getImage() {

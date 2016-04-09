@@ -2,29 +2,55 @@ package com.sunner.imagesocket.Socket;
 
 import android.graphics.Bitmap;
 
+import com.sunner.imagesocket.Log.Log;
+import com.sunner.imagesocket.RTP.RTPPacket;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.DatagramPacket;
 import java.net.Socket;
 import java.net.SocketAddress;
 
 /**
  * Created by sunner on 2016/4/8.
  */
-class ImageSocket_TCP {
+class ImageSocket_TCP extends ImgSocket {
     Socket socket = null;
     SocketAddress socketAddress;
+    OutputStream outputStream = null;
 
     public ImageSocket_TCP(String host, int port) throws IOException {
+        localPort = port;
+        oppoHost = host;
+        while (!portsAvaliable(localPort)) {
+            Log.v(TAG, "本地連接阜" + localPort + "被佔用，自動產生新連接阜號碼");
+            determineNewPort();
+        }
+        Log.v(TAG, "本地連接阜號碼為" + localPort);
         socket = new Socket(host, port);
         socketAddress = socket.getRemoteSocketAddress();
     }
 
     // The Image socket can set the time to keep connecting if it fail at first
-    public ImageSocket_TCP keepConnect(int timeRepeatConnect) {
-        // skip implementation
+    public ImageSocket_TCP keepConnect(int timeRepeatConnect) throws IOException {
+        for (int i = 0; i < timeRepeatConnect; i++) {
+            Log.v(TAG, "第" + i + "次嘗試連線");
+            if (!socket.isConnected()) {
+                connect();
+            }
+        }
+        if (!socket.isConnected())
+            Log.e(TAG, "Keep connecting fail, please check if the opposite is ready.");
+        else
+            Log.v(TAG, "Connect Success!");
+
         return null;
     }
 
-    public ImageSocket_TCP getInputStream() {
+    // The Inputstream cannot send the image directly, skip implementation
+    public ImageSocket_TCP getInputStream() throws IOException {
+        outputStream = socket.getOutputStream();
         return this;
     }
 
@@ -39,7 +65,26 @@ class ImageSocket_TCP {
         socket.connect(socketAddress);
     }
 
-    public void send(Bitmap bitmap){
-        // skip implementation
+    public ImageSocket_TCP send(Bitmap bitmap) throws IOException{
+        if (outputStream == null)
+            Log.e(TAG, "Haven't get input stream yet.");
+        else {
+            String bitmapString = bitMap2String(bitmap);
+            String smallString = "";
+            do {
+                // Get the piece payload of image first and remove it
+                if (bitmapString.length() > imageLength) {
+                    smallString = bitmapString.substring(0, imageLength);
+                    bitmapString = bitmapString.substring(imageLength, bitmapString.length());
+                } else {
+                    smallString = bitmapString;
+                    bitmapString = "";
+                }
+
+                // Send the pachage
+                outputStream.write(smallString.getBytes());
+            } while (bitmapString.length() > 0);
+        }
+        return this;
     }
 }

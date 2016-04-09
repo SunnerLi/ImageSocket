@@ -58,34 +58,91 @@ public class ImageSocket {
         }
     }
 
+    // UDP mode: true to check the socket is open
+    public ImageSocket getSocket(boolean have_to_check_if_port_is_availiable) throws IOException{
+        if (mode == TCP)
+            Log.e(TAG, "TCP mode cannot use this function");
+        else if (mode == Def)
+            Log.e(TAG, "Haven't set protocol");
+        else {
+            if (have_to_check_if_port_is_availiable)
+                socket_udp.getSocketWithCheck();
+            else
+                socket_udp.getSocketWithoutCheck();
+        }
+        return this;
+    }
+
+    // TCP mode: the number to assign how many time to check
+    public ImageSocket getSocket(int times_to_reconnect_if_connect_fail) throws IOException{
+        if (mode == UDP)
+            Log.e(TAG, "UDP mode cannot use this function");
+        else if (mode == Def)
+            Log.e(TAG, "Haven't set protocol");
+        else {
+            keepConnect(times_to_reconnect_if_connect_fail);
+        }
+        return this;
+    }
+
     // The Image socket can set the time to keep connecting if it fail at first
-    public ImageSocket keepConnect(int timeRepeatConnect) {
-        // skip implementation
-        // Notice: the UDP should forbid the query
-        return null;
+    protected ImageSocket keepConnect(int timeRepeatConnect) throws IOException {
+        if (socket_tcp != null)
+            socket_tcp.keepConnect(timeRepeatConnect);
+        else if (socket_udp != null)
+            Log.e(TAG, "UDP mode cannot use this function");
+        else
+            Log.e(TAG, "Haven't set protocol");
+        return this;
+    }
+
+    // Set the Opposite port number (UDP)
+    public ImageSocket setOppoPort(int port){
+        if (mode == TCP)
+            Log.e(TAG, "TCP mode cannot use this function");
+        else if (mode == Def)
+            Log.e(TAG, "Haven't set protocol");
+        else {
+            socket_udp.setOppoPort(port);
+        }
+        return this;
     }
 
     // Inherit the usage of the socket(didn't return the real inputStream)
-    public ImageSocket getInputStream() {
-        // skip implementation
-        // Notice: the UDP should forbid the query
+    public ImageSocket getInputStream() throws IOException {
+        if (socket_tcp != null)
+            socket_tcp.getInputStream();
+        else if (socket_udp != null)
+            Log.e(TAG, "UDP mode cannot use this function");
+        else
+            Log.e(TAG, "Haven't set protocol");
         return null;
     }
 
     // Close the image socket
     public void close() throws IOException {
-        // skip implementation
+        if (socket_tcp != null)
+            socket_tcp.close();
+        else if (socket_udp != null)
+            socket_udp.close();
     }
 
     // Connect to the server
-    public void connect() throws IOException {
-        // skip implementation
-        // Notice: the UDP should forbid the query
+    public ImageSocket connect() throws IOException {
+        if (socket_tcp != null)
+            socket_tcp.connect();
+        else if (socket_udp != null)
+            Log.e(TAG, "UDP mode cannot use this function");
+        return this;
     }
 
     // Send the Image
-    public void send(Bitmap bitmap) {
-        // skip implementation
+    public ImageSocket send(Bitmap bitmap) throws IOException {
+        if (socket_tcp != null)
+            socket_tcp.send(bitmap);
+        else if (socket_udp != null)
+            socket_udp.send(bitmap);
+        return this;
     }
 
 }
