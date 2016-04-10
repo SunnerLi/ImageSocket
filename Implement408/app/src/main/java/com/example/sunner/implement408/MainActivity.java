@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 super.run();
 
-                ImageSocket imageSocket = new ImageSocket("192.168.0.103", 12345);
+                ImageSocket imageSocket = new ImageSocket("192.168.0.101", 12345);
                 try {
                     imageSocket.setProtocol(ImageSocket.UDP)
                             .getSocket(true)
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public Bitmap getImage() {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inScaled = false;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.yellow1, opts);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.red5_write1, opts);
         return bitmap;
     }
 }

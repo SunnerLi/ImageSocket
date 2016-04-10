@@ -54,17 +54,29 @@ class ImageSocket_UDP():
 			Recv the image string from the opposite
 			This function force to set the timeout
 		"""
-		png = ""
 		print "Had set timeout? ", self.hadSetTimeout
 		if not self.hadSetTimeout:
 			self.sock.settimeout(10)
 			print "Set Default Timeout"
-		try:
-			data, addr = self.sock.recvfrom(20000000)
-			print "length: ", len(data)
-		except socket.timeout:
-			data = ""
-		return data
+
+		png = ""
+		while True:
+			try:
+				data, addr = self.sock.recvfrom(20000000)
+				print "length: ", len(data)
+				r = rtp.RTP()
+				png += data[65:]
+				if r.decodeAndGetMarker(data[:65]) == 0:
+					break
+			except socket.timeout:
+				data = ""
+				break
+		self.printWithASCII(png)
+		print len(png)
+		png = base64.b64decode(png)
+		png = self.formImgArr(png)
+		png = self.oneD2Numpy(png)
+		return png
 
 	def printWithASCII(self, data):
 		"""
@@ -73,10 +85,22 @@ class ImageSocket_UDP():
 		for i in range(len(data)):
 			print "arr[", i, "]: ", data[i], "\tcode: ", ord(data[i])
 
-		r = rtp.RTP()
-		header = r.DecodeHeader(data)
-		print "Header string Length: ", len(header)
-		r.printHeader(header)
+	def formImgArr(self, data):
+		"""
+			Change the image string into 1D array
+		"""
+		png = []
+		for i in range(len(data)):
+			png.append(ord(data[i]))
+		return png
+
+	def oneD2Numpy(self, data):
+		"""
+			Decode the 1D image by the OpenCV
+		"""
+		data = np.asarray(data, dtype=np.uint8)
+		data = cv2.imdecode(data, 1)
+		return data
 
 	def close(self):
 		"""

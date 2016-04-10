@@ -104,7 +104,7 @@ public class RTPPacket {
         int _extension = (header[0] & 0x10) >> 4;
         int _cc = (header[0] & 0x0F);
         int _marker = (header[1] >> 7);
-        int _pt = (header[1] | (pt & 0x7F));
+        int _pt = (header[1] | (pt & 0x7F));        // ?????????????????
         int _imageIndex = (header[2] << 8) + header[3];
         int _minute = header[4];
         int _second = header[5];
