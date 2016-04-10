@@ -20,7 +20,7 @@ public class ImgSocket {
     protected String oppoHost = "";
     protected int oppoPort = -1;
 
-    protected static int imageLength = 60000;                                                       // the max length of payload
+    protected static int imageLength = 2000;                                                       // the max length of payload
 
 
     // 檢查後5個阜號碼是否閒置

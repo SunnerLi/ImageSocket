@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 import rtp
 
+
 class ImageSocket_UDP():
 	"""
 		This class define the UDP ImageSocket contain and method
@@ -54,15 +55,13 @@ class ImageSocket_UDP():
 			Recv the image string from the opposite
 			This function force to set the timeout
 		"""
-		print "Had set timeout? ", self.hadSetTimeout
 		if not self.hadSetTimeout:
 			self.sock.settimeout(10)
-			print "Set Default Timeout"
 
 		png = ""
 		while True:
 			try:
-				data, addr = self.sock.recvfrom(20000000)
+				data, addr = self.sock.recvfrom(size)
 				print "length: ", len(data)
 				r = rtp.RTP()
 				png += data[65:]
@@ -71,8 +70,8 @@ class ImageSocket_UDP():
 			except socket.timeout:
 				data = ""
 				break
-		self.printWithASCII(png)
-		print len(png)
+
+		# Transform image string to numpy (Through OpenCV)
 		png = base64.b64decode(png)
 		png = self.formImgArr(png)
 		png = self.oneD2Numpy(png)

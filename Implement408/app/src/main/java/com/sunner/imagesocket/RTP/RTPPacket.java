@@ -61,7 +61,7 @@ public class RTPPacket {
     }
 
     // Set the max length of payload
-    public RTPPacket setMaxLengthPayload(int length){
+    public RTPPacket setMaxLengthPayload(int length) {
         payloadMaxLength = length;
         return this;
     }
@@ -70,7 +70,7 @@ public class RTPPacket {
     public byte[] encode(String payload, int imageIndex) {
         // 第 1 個參數為image之index
         // 第 3 個參數表示是否為結尾   ( 0 為結尾 )
-        return encode(payload, imageIndex, (payload.length() > payloadMaxLength ? 1 : 0));
+        return encode(payload, imageIndex, (payload.length() >= payloadMaxLength ? 1 : 0));
     }
 
     // 編碼實作

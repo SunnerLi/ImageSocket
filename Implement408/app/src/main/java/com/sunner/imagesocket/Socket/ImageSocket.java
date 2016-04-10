@@ -137,7 +137,7 @@ public class ImageSocket {
     }
 
     // Send the Image
-    public ImageSocket send(Bitmap bitmap) throws IOException {
+    public ImageSocket send(Bitmap bitmap) throws IOException, InterruptedException {
         if (socket_tcp != null)
             socket_tcp.send(bitmap);
         else if (socket_udp != null)

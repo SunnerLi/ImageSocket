@@ -38,7 +38,8 @@ class ImageSocket_TCP extends ImgSocket {
             Log.v(TAG, "第" + i + "次嘗試連線");
             if (!socket.isConnected()) {
                 connect();
-            }
+            }else
+                break;
         }
         if (!socket.isConnected())
             Log.e(TAG, "Keep connecting fail, please check if the opposite is ready.");
@@ -61,10 +62,22 @@ class ImageSocket_TCP extends ImgSocket {
     }
 
     // Connect to the server
-    public void connect() throws IOException {
-        socket.connect(socketAddress);
+    public void connect() {
+        if (!socket.isConnected()) {
+            try {
+                socket.connect(socketAddress);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
+    /*
     public ImageSocket_TCP send(Bitmap bitmap) throws IOException{
         if (outputStream == null)
             Log.e(TAG, "Haven't get input stream yet.");
@@ -83,6 +96,35 @@ class ImageSocket_TCP extends ImgSocket {
 
                 // Send the pachage
                 outputStream.write(smallString.getBytes());
+            } while (bitmapString.length() > 0);
+        }
+        return this;
+    }
+    */
+    public ImageSocket_TCP send(Bitmap bitmap) throws IOException, InterruptedException{
+        if (outputStream == null)
+            Log.e(TAG, "Haven't get input stream yet.");
+        else {
+            int imageIndex = 0;
+            String bitmapString = bitMap2String(bitmap);
+            String smallString = "";
+            do {
+                // Get the piece payload of image first and remove it
+                if (bitmapString.length() > imageLength) {
+                    smallString = bitmapString.substring(0, imageLength);
+                    bitmapString = bitmapString.substring(imageLength, bitmapString.length());
+                } else {
+                    smallString = bitmapString;
+                    bitmapString = "";
+                }
+
+                // Encode the RTP
+                RTPPacket rtpPacket = new RTPPacket().setMaxLengthPayload(imageLength);
+                byte[] _package = rtpPacket.encode(smallString, imageIndex++);
+
+                // Send the pachage
+                outputStream.write(_package);
+                Thread.sleep(20);
             } while (bitmapString.length() > 0);
         }
         return this;
