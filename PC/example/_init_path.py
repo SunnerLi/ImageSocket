@@ -13,9 +13,9 @@ def add_ImageSocket_path(path):
 this = os.path.dirname(__file__)
 
 # Add ImageSocket to PYTHONPATH
-image_socket_path = os.path.join(this, 'ImageSocket', 'Socket')
+image_socket_path = os.path.join(this, '..', 'ImageSocket', 'Socket')
 add_ImageSocket_path(image_socket_path)
 
 #Add RTP to PYTHONPATH
-rtp_path = os.path.join(this, 'ImageSocket', 'RTP')
+rtp_path = os.path.join(this, '..', 'ImageSocket', 'RTP')
 add_ImageSocket_path(rtp_path)
