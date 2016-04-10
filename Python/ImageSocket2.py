@@ -104,23 +104,44 @@ class ImageSocket_Work():
 		if not self.hadSetTimeout:
 			self.workSock.settimeout(10)
 
-		png = ""
+		roughPng = ""
 		while True:
 			try:
 				data = self.workSock.recv(2000000)
 				print "length: ", len(data)
-				r = rtp.RTP()
-				png += data[65:]
-				if r.decodeAndGetMarker(data[:65]) == 0:
+				roughPng += data
+				if len(data) < 66:
 					break
+				self.workSock.settimeout(0.5)
 			except socket.timeout:
 				data = ""
 				break
 
 		# Transform image string to numpy (Through OpenCV)
+		png = self.cleanHeader(roughPng)
 		png = base64.b64decode(png)
 		png = self.formImgArr(png)
 		png = self.oneD2Numpy(png)
+		return png
+
+	def cleanHeader(self, png):
+		"""
+			Drop the header (No consider RTP information in TCP)
+		"""
+		png = png[:len(png)-65]
+		copy = png
+		png = ""
+
+		# Get the 1st header to show speed
+		header = copy[:65]
+		r = rtp.RTP()
+		r.decode(header)
+
+		# Drop the rest
+		while len(copy) > 0:
+			piece = copy[65:1445]
+			png += piece
+			copy = copy[1445:]
 		return png
 
 	def formImgArr(self, data):

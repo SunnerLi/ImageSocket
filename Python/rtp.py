@@ -54,7 +54,7 @@ class RTP():
 		if self.version == -1:
 			print "Haven't call decodeArr"
 		else:
-			"""
+			
 			print "Version: ", self.version
 			print "Padding: ", self.padding
 			print "Extention: ", self.extension
@@ -68,8 +68,6 @@ class RTP():
 
 			tt = datetime.datetime.now()
 			print "now:         ", tt.minute, ':', tt.second, ':', str(tt.microsecond)[:3]
-			"""
-			pass
 
 
 	def printHeaderString(self, headerString):

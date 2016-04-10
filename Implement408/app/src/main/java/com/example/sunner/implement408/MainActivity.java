@@ -59,11 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }.start();
-        /*
-        RTPPacket rtpPacket = new RTPPacket();
-        byte[] code = rtpPacket.encode("ak", 255);
-        rtpPacket.decode(code);
-        */
     }
 
     public Bitmap getImage() {

@@ -77,30 +77,6 @@ class ImageSocket_TCP extends ImgSocket {
         }
     }
 
-    /*
-    public ImageSocket_TCP send(Bitmap bitmap) throws IOException{
-        if (outputStream == null)
-            Log.e(TAG, "Haven't get input stream yet.");
-        else {
-            String bitmapString = bitMap2String(bitmap);
-            String smallString = "";
-            do {
-                // Get the piece payload of image first and remove it
-                if (bitmapString.length() > imageLength) {
-                    smallString = bitmapString.substring(0, imageLength);
-                    bitmapString = bitmapString.substring(imageLength, bitmapString.length());
-                } else {
-                    smallString = bitmapString;
-                    bitmapString = "";
-                }
-
-                // Send the pachage
-                outputStream.write(smallString.getBytes());
-            } while (bitmapString.length() > 0);
-        }
-        return this;
-    }
-    */
     public ImageSocket_TCP send(Bitmap bitmap) throws IOException, InterruptedException{
         if (outputStream == null)
             Log.e(TAG, "Haven't get input stream yet.");
@@ -124,8 +100,12 @@ class ImageSocket_TCP extends ImgSocket {
 
                 // Send the pachage
                 outputStream.write(_package);
-                Thread.sleep(20);
+                //Thread.sleep(10);
             } while (bitmapString.length() > 0);
+            Thread.sleep(100);
+            RTPPacket rtpPacket = new RTPPacket();
+            byte[] end = rtpPacket.encode("", 0);
+            outputStream.write(end);
         }
         return this;
     }
