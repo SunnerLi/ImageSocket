@@ -46,11 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
                 ImageSocket imageSocket = new ImageSocket("192.168.0.101", 12345);
                 try {
-                    imageSocket.setProtocol(ImageSocket.TCP)
-                            .getSocket(10)
-                            .connect();
-                    imageSocket.getInputStream();
-                    imageSocket.send(getImage());
+                    imageSocket.setProtocol(ImageSocket.UDP)
+                            .getSocket(true)
+                            .setOppoPort(12345)
+                            .send(getImage());
+                    imageSocket.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e){
