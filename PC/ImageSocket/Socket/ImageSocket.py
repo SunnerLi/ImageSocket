@@ -1,9 +1,11 @@
+import _init_path
 import socket, Queue
 import base64
 import numpy as np
 import cv2
 import rtp
 import work
+import logg
 
 class ImageSocket():
 	"""
@@ -36,7 +38,7 @@ class ImageSocket():
 			self.mode = self.TCP
 			self.opSock = work.ImageSocket_Work()
 		else:
-			print "This plugin didn't support other type of socket."
+			logg.LOG("This plugin didn't support other type of socket.")
 
 	def setsockopt(self, n1, canReuse, n2):
 		"""
@@ -60,9 +62,9 @@ class ImageSocket():
 		if self.mode == self.TCP:
 			self.sock.listen(times)
 		elif self.mode == self.UDP:
-			print "UDP mode cannot call this function. Try to remove this call."
+			logg.LOG("UDP mode cannot call this function. Try to remove this call.")
 		else:
-			print "Invalid mode cannot call this function."
+			logg.LOG("Invalid mode cannot call this function.")
 
 	def settimeout(self, _time=10):
 		"""
@@ -83,9 +85,9 @@ class ImageSocket():
 			self.opSock.setWorkSocket(opSock)
 			return self.opSock, address
 		elif self.mode == self.UDP:
-			print "UDP mode cannot call this function. Try to remove this call."
+			logg.LOG("UDP mode cannot call this function. Try to remove this call.")
 		else:
-			print "Invalid mode cannot call this function."
+			logg.LOG("Invalid mode cannot call this function.")
 
 	def recvfrom(self, size):
 		"""
@@ -101,7 +103,7 @@ class ImageSocket():
 			while True:
 				try:
 					data, addr = self.sock.recvfrom(size)
-					print "length: ", len(data)
+					logg.LOG("length: ", len(data))
 					r = rtp.RTP()
 					png += data[65:]
 					if r.decodeAndGetMarker(data[:65]) == 0:
@@ -116,9 +118,9 @@ class ImageSocket():
 			png = self.oneD2Numpy(png)
 			return png
 		elif self.mode == self.TCP:
-			print "TCP mode cannot call this function! Try ' recv() '."
+			logg.LOG("TCP mode cannot call this function! Try ' recv() '")
 		else:
-			print "Invalid mode cannot call this function."
+			logg.LOG("Invalid mode cannot call this function.")
 
 	def printWithASCII(self, data):
 		"""
@@ -126,7 +128,7 @@ class ImageSocket():
 			This function just used to debug
 		"""
 		for i in range(len(data)):
-			print "arr[", i, "]: ", data[i], "\tASCII: ", ord(data[i])
+			logg.LOG("arr[", i, "]: ", data[i], "\tASCII: ", ord(data[i]))
 
 	def formImgArr(self, data):
 		"""

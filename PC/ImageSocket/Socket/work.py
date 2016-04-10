@@ -3,6 +3,7 @@ import base64
 import numpy as np
 import rtp
 import cv2
+import logg
 
 
 class ImageSocket_Work():
@@ -44,7 +45,7 @@ class ImageSocket_Work():
 		while True:
 			try:
 				data = self.workSock.recv(2000000)
-				print "length: ", len(data)
+				logg.LOG("length: ", len(data))
 				roughPng += data
 				if len(data) < 66:
 					break

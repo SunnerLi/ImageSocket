@@ -19,3 +19,7 @@ add_ImageSocket_path(image_socket_path)
 #Add RTP to PYTHONPATH
 rtp_path = os.path.join(this, '..', 'ImageSocket', 'RTP')
 add_ImageSocket_path(rtp_path)
+
+#Add Log path to PYTHONPATH
+log_path = os.path.join(this, '..', 'ImageSocket', 'LOG')
+add_ImageSocket_path(log_path)
