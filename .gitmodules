@@ -1,0 +1,3 @@
+[submodule "ImageSocket_Python"]
+	path = ImageSocket_Python
+	url = https://github.com/SunnerLi/ImageSocket_Python.git
