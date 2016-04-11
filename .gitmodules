@@ -1,3 +1,6 @@
 [submodule "ImageSocket_Python"]
 	path = ImageSocket_Python
 	url = https://github.com/SunnerLi/ImageSocket_Python.git
+[submodule "ImageSocket_Android"]
+	path = ImageSocket_Android
+	url = https://github.com/SunnerLi/ImageSocket_Android.git
