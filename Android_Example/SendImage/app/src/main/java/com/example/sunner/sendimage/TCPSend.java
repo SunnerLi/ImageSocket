@@ -15,6 +15,8 @@ import com.sunner.imagesocket.Socket.ImageSocket;
 import java.io.IOException;
 
 public class TCPSend extends AppCompatActivity {
+    public final String ipTAG = "ip";                                                               // Used to carried ip string
+    public final String bundleTAG = "bundle";                                                       // Used to carried bundle
     Button button;
     String oppositeHost = "192.168.0.100";
 
@@ -32,6 +34,7 @@ public class TCPSend extends AppCompatActivity {
                 finish();
             }
         });
+        oppositeHost = getIntent().getExtras().getBundle(bundleTAG).getString(ipTAG);
     }
 
     @Override
