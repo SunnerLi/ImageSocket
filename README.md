@@ -1,6 +1,6 @@
 # ImageSocket
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg?maxAge=2592000)]()
-[![Packagist](https://img.shields.io/badge/Develope-0.0.1-brightgreen.svg)]()</br>   
+[![Packagist](https://img.shields.io/badge/Stable-0.0.2-brightgreen.svg)]()</br>   
 ![Packagist](https://github.com/SunnerLi/ImageSocket/blob/master/Image/logo.jpeg)</br>   
 
 The Android / Python plugin that can used to send the image rapidly.
@@ -40,16 +40,16 @@ Install
 --------------------    
 Python:
 ```
-sudo pip install "https://github.com/sunnerli/ImageSocket_Python/tarball/0.0.1"
+sudo pip install "https://github.com/sunnerli/ImageSocket_Python/tarball/0.0.2"
 ```   
 Android(Gradle):
 ```gradle
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.sunner.imagesocket:imagesocket:0.0.1'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.sunner.imagesocket:imagesocket:0.0.2'
 }
 ```
-Please check the detail in the submodule readme.    
+Recommend to use the latest appcompat pachage. Please check the detail in the submodule readme.    
 </br>   
 </br>    
   
@@ -64,6 +64,11 @@ This project is the example that show how to use. You should go to the following
 Contributer 
 --------------------
 * SunnerLi - <a6214123@gmail.com>
+</br>    
+</br>    
+Image Resource 
+--------------------
+Dog: http://exmoorpet.com/wp-content/uploads/2012/08/dog1.png
 </br>    
 </br>    
 
