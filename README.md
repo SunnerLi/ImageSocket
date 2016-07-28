@@ -4,8 +4,8 @@
 ![Packagist](https://github.com/SunnerLi/ImageSocket/blob/master/Image/logo.jpeg)</br>   
 
 The Android / Python plugin that can used to send the image rapidly.
-</br>   
-</br>    
+    
+      
 Abstract
 ---------------------
 This project provide a new class `ImageSocket`. As the usual, you can easily transfer the string.
@@ -13,29 +13,27 @@ But It's not easy to transfer the image with a few code. On the Android platform
 TCP & UDP two WiFi method to pass information. One the other hand, the python platform provide 
 socket pachage to receive the infomation. This project build a basic API that the developer can 
 transfer the image in a easy way!</br>   
-</br>   
-</br>    
+    
+        
 Demo
 ---------------------
 [![Packagist](https://github.com/SunnerLi/ImageSocket/blob/master/Image/TCP.jpg)]()
 [![Packagist](https://github.com/SunnerLi/ImageSocket/blob/master/Image/UDP.jpg)]()
-</br>   
-</br>    
+    
+    
 Contain
 ---------------------
 * Android_Example: There is one example to show how to send image
 * PC_Example     : There're two python script show how to receive the image from phone    
-
-</br>   
-</br>
+    
+    
 Usage
 ---------------------  
 Please check the wiki in detail.
 - [ Android Send Image ](https://github.com/SunnerLi/ImageSocket_Android/wiki)
 - [Python Receive Image](https://github.com/SunnerLi/ImageSocket_Python/wiki)    
-
-</br>   
-</br>    
+    
+    
 Install 
 --------------------    
 Python:
@@ -50,28 +48,25 @@ dependencies {
 }
 ```
 Recommend to use the latest appcompat pachage. Please check the detail in the submodule readme.    
-</br>   
-</br>    
-  
+    
+    
 Make It Better 
 --------------------
 This project is the example that show how to use. You should go to the following link if you want to improve or add the new function to the ImageSocket plugin.
 - [ Android Develop project ](https://github.com/SunnerLi/ImageSocket_Android)
 - [ Python Develop project  ](https://github.com/SunnerLi/ImageSocket_Python)    
-
-</br>   
-</br>    
+    
+    
 Contributer 
 --------------------
 * SunnerLi - <a6214123@gmail.com>
-</br>    
-</br>    
+    
+    
 Image Resource 
 --------------------
 Dog: http://exmoorpet.com/wp-content/uploads/2012/08/dog1.png
-</br>    
-</br>    
-
+    
+    
 License
 ---------------------
     The MIT License (MIT)
