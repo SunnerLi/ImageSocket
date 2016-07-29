@@ -15,7 +15,7 @@ import com.sunner.imagesocket.Socket.ImageSocket;
 import java.io.IOException;
 
 public class TCPSend extends AppCompatActivity {
-    public final String ipTAG = "ip";                                                               // Used to carried ip string
+    public final String addrTAG = "addr ip";                                                        // Used to carried ip string
     public final String bundleTAG = "bundle";                                                       // Used to carried bundle
     Button button;
     String oppositeHost = "192.168.0.100";
@@ -34,7 +34,7 @@ public class TCPSend extends AppCompatActivity {
                 finish();
             }
         });
-        oppositeHost = getIntent().getExtras().getBundle(bundleTAG).getString(ipTAG);
+        oppositeHost = getIntent().getExtras().getBundle(bundleTAG).getString(addrTAG);
     }
 
     @Override
@@ -52,16 +52,16 @@ public class TCPSend extends AppCompatActivity {
 
                         ImageSocket imageSocket = new ImageSocket(oppositeHost, 12345);
                         try {
-                            imageSocket.setProtocol(ImageSocket.TCP)                                        // Must set protocol first!!!
+                            imageSocket.setProtocol(ImageSocket.TCP)                                // Must set protocol first!!!
 
-                                    .getSocket(10)                                                          // Set the time to re-connect if connect fail (It would call connect function)
+                                    .getSocket(10)                                                  // Set the time to re-connect if connect fail (It would call connect function)
 
-                                    .connect();                                                             // Connect to the PC (can skip if call getSocket first)
+                                    .connect();                                                     // Connect to the PC (can skip if call getSocket first)
 
-                            imageSocket.getInputStream();                                                   // As the usual socket process
-                            imageSocket.send(getImage());                                                   // The input is bitmap only
+                            imageSocket.getOutputStream();                                          // As the usual socket process
+                            imageSocket.send(getImage());                                           // The input is bitmap only
 
-                            imageSocket.close();                                                            // Close the socket at final
+                            imageSocket.close();                                                    // Close the socket at final
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (InterruptedException e) {

@@ -15,10 +15,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    public final String ipTAG = "ip";                                                               // Used to carried ip string
+    public final String addrTAG = "addr ip";                                                        // Used to carried ip string
     public final String bundleTAG = "bundle";                                                       // Used to carried bundle
-    Button tcpBtn, udpBtn;
+    Button tcpBtn, udpBtn, btBtn;
     EditText editText;
+    Examiner examiner = new Examiner();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +35,23 @@ public class MainActivity extends AppCompatActivity {
 
         tcpBtn = (Button)findViewById(R.id.tcp_btn);
         udpBtn = (Button)findViewById(R.id.udp_btn);
+        btBtn = (Button)findViewById(R.id.bt_btn);
         editText = (EditText)findViewById(R.id.ip);
 
         tcpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String ip = editText.getText().toString();
-                if (ip == null || ip.length() < 7) {
-                    Log.e("Send Image Ex =>>", "IP is invalid");
-                    Toast.makeText(MainActivity.this, "IP is invalid", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                if (examiner.isValidInternetAddr(ip)){
                     Bundle bundle = new Bundle();
-                    bundle.putString(ipTAG, ip);
+                    bundle.putString(addrTAG, ip);
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, TCPSend.class);
                     intent.putExtra(bundleTAG, bundle);
                     startActivity(intent);
+                }else {
+                    Log.e("Send Image Ex =>>", "IP is invalid");
+                    Toast.makeText(MainActivity.this, "IP is invalid", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -58,17 +59,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String ip = editText.getText().toString();
-                if (ip == null || ip.length() < 7) {
-                    Log.e("Send Image Ex =>>", "IP is invalid");
-                    Toast.makeText(MainActivity.this, "IP is invalid", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                if (examiner.isValidInternetAddr(ip)){
                     Bundle bundle = new Bundle();
-                    bundle.putString(ipTAG, ip);
+                    bundle.putString(addrTAG, ip);
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, UDPSend.class);
                     intent.putExtra(bundleTAG, bundle);
                     startActivity(intent);
+                }else {
+                    Log.e("Send Image Ex =>>", "IP is invalid");
+                    Toast.makeText(MainActivity.this, "IP is invalid", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ip = editText.getText().toString();
+                if (examiner.isValidBTAddr(ip)){
+                    Bundle bundle = new Bundle();
+                    bundle.putString(addrTAG, ip);
+                    Intent intent = new Intent();
+                    intent.setClass(MainActivity.this, BTSend.class);
+                    intent.putExtra(bundleTAG, bundle);
+                    startActivity(intent);
+                }else {
+                    Log.e("Send Image Ex =>>", "BT address is invalid");
+                    Toast.makeText(MainActivity.this, "bluetooth address is invalid", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sunner.sendimage">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -26,6 +27,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".UDPSend"
+            android:label="@string/title_activity_udpsend"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".BTSend"
             android:label="@string/title_activity_udpsend"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
 
@@ -34,12 +34,20 @@
             android:textSize="30dp"
             />
 
+        <Button
+            android:id="@+id/bt_btn"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="@string/bt_btn"
+            android:textSize="30dp"
+            />
+
         <EditText
             android:id="@+id/ip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="請輸入IP"
-            android:text="10.201.5.145"
+            android:text="48:51:B7:D6:62:2A"
             />
     </LinearLayout>
 

@@ -15,7 +15,7 @@ import com.sunner.imagesocket.Socket.ImageSocket;
 import java.io.IOException;
 
 public class UDPSend extends AppCompatActivity {
-    public final String ipTAG = "ip";                                                               // Used to carried ip string
+    public final String addrTAG = "addr ip";                                                        // Used to carried ip string
     public final String bundleTAG = "bundle";                                                       // Used to carried bundle
 
     Button button;
@@ -35,7 +35,7 @@ public class UDPSend extends AppCompatActivity {
                 finish();
             }
         });
-        oppositeHost = getIntent().getExtras().getBundle(bundleTAG).getString(ipTAG);
+        oppositeHost = getIntent().getExtras().getBundle(bundleTAG).getString(addrTAG);
     }
 
     @Override

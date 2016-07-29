@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="tcp_btn">TCP 傳送</string>
     <string name="udp_btn">UDP 傳送</string>
+    <string name="bt_btn">BT 傳送</string>
     <string name="title_activity_tcpsend">TCPSend</string>
     <string name="send">傳送！</string>
     <string name="title_activity_udpsend">UDPSend</string>
