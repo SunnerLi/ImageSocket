@@ -1,30 +1,37 @@
 # ImageSocket
 [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg?maxAge=2592000)]()
-[![Packagist](https://img.shields.io/badge/Stable-0.0.2-brightgreen.svg)]()</br>   
-![Packagist](https://github.com/SunnerLi/ImageSocket/blob/master/Image/logo.jpeg)</br>   
-
+[![Packagist](https://img.shields.io/badge/Develope-1.0.0-brightgreen.svg)]()</br>   
+    
 The Android / Python plugin that can used to send the image rapidly.
     
-      
+    
+<p align="center">
+  <img src="https://github.com/SunnerLi/ImageSocket/blob/master/Image/logo.jpeg"/>
+</p> 
+    
+    
+     
 Abstract
 ---------------------
 This project provide a new class `ImageSocket`. As the usual, you can easily transfer the string.
 But It's not easy to transfer the image with a few code. On the Android platform, Google provide 
 TCP & UDP two WiFi method to pass information. One the other hand, the python platform provide 
 socket pachage to receive the infomation. This project build a basic API that the developer can 
-transfer the image in a easy way!</br>   
+transfer the image in a easy way!    
     
-        
+    
+     
 Demo
 ---------------------
-[![Packagist](https://github.com/SunnerLi/ImageSocket/blob/master/Image/TCP.jpg)]()
-[![Packagist](https://github.com/SunnerLi/ImageSocket/blob/master/Image/UDP.jpg)]()
+(Skip)    
+    
     
     
 Contain
 ---------------------
 * Android_Example: There is one example to show how to send image
 * PC_Example     : There're two python script show how to receive the image from phone    
+    
     
     
 Usage
@@ -34,20 +41,27 @@ Please check the wiki in detail.
 - [Python Receive Image](https://github.com/SunnerLi/ImageSocket_Python/wiki)    
     
     
+     
 Install 
 --------------------    
 Python:
 ```
-sudo pip install "https://github.com/sunnerli/ImageSocket_Python/tarball/0.0.2"
+sudo pip install "https://github.com/sunnerli/ImageSocket_Python/tarball/1.0.0"
 ```   
+or    
+```
+sudo pip install ImageSocket --update
+```
+    
 Android(Gradle):
 ```gradle
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.sunner.imagesocket:imagesocket:0.0.2'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.sunner.imagesocket:imagesocket:1.0.0'
 }
 ```
-Recommend to use the latest appcompat pachage. Please check the detail in the submodule readme.    
+Please check the detail in the submodule readme.    
+    
     
     
 Make It Better 
@@ -56,15 +70,18 @@ This project is the example that show how to use. You should go to the following
 - [ Android Develop project ](https://github.com/SunnerLi/ImageSocket_Android)
 - [ Python Develop project  ](https://github.com/SunnerLi/ImageSocket_Python)    
     
+      
     
-Contributer 
+Contributer    
 --------------------
 * SunnerLi - <a6214123@gmail.com>
     
     
-Image Resource 
+    
+Version    
 --------------------
-Dog: http://exmoorpet.com/wp-content/uploads/2012/08/dog1.png
+1.0.0 (stable)    
+    
     
     
 License
