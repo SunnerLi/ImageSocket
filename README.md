@@ -22,18 +22,23 @@ transfer the image in a easy way!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This project provide Internet( TCP & UDP ) and bluetooth methodology to reach the goal.    
     
     
-    
      
+         
+    
 Demo
 ---------------------
 (Skip)    
     
+    
+        
     
     
 Contain
 ---------------------
 * Android_Example: There is one example to show how to send image
 * PC_Example     : There're two python script show how to receive the image from phone    
+    
+    
     
     
     
@@ -45,6 +50,8 @@ Please check the wiki in detail.
     
     
      
+    
+    
 Install 
 --------------------    
 Python:
@@ -64,29 +71,37 @@ dependencies {
 }
 ```
 Please check the detail in the submodule readme.    
-    
-    
-    
+     
+     
+     
+     
+     
 Make It Better 
 --------------------
 This project is the example that show how to use. You should go to the following link if you want to improve or add the new function to the ImageSocket plugin.
 - [ Android Develop project ](https://github.com/SunnerLi/ImageSocket_Android)
 - [ Python Develop project  ](https://github.com/SunnerLi/ImageSocket_Python)    
-    
+     
       
-    
+     
+     
+     
 Contributer    
 --------------------
 * SunnerLi - <a6214123@gmail.com>
-    
-    
-    
+     
+     
+     
+     
+     
 Version    
 --------------------
 1.0.0 (stable)    
-    
-    
-    
+     
+     
+     
+     
+     
 License
 ---------------------
     The MIT License (MIT)
